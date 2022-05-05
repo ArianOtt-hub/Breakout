@@ -3,42 +3,41 @@ package Breakout2;
 import processing.core.PApplet;
 
 public class Paddle {
-//Attribute
-    private int breite;
-    private int hoehe;
+    //Attribute
+    private final int width;
+    private final int height;
     private int paddleX;
-    private int paddleY;
-    private PApplet myApplet;
-
+    private final int paddleY;
+    private final PApplet myApplet;
 
 
     //Konstruktor
-    public Paddle(PApplet mA,int b){
+    public Paddle(PApplet mA, int b) {
         myApplet = mA;
-        breite = b;
-        hoehe = 20;
-        paddleX = myApplet.width/2;
-        paddleY = myApplet.height-30;
+        width = b;
+        height = 20;
+        paddleX = myApplet.width / 2;
+        paddleY = myApplet.height - 30;
     }
 
 //Methoden
 
-    public void paddleZeichen(){
+    public void paddleDraw() {
         myApplet.rectMode(myApplet.CENTER);
         myApplet.fill(255, 255, 0);
-        myApplet.rect(paddleX,paddleY, breite, hoehe);
+        myApplet.rect(paddleX, paddleY, width, height);
     }
 
-    public void paddleBewegen(){
+    public void paddleMove() {
         paddleX = myApplet.mouseX;
     }
 
-    public int getBreite() {
-        return breite;
+    public int getWidth() {
+        return width;
     }
 
-    public int getHoehe() {
-        return hoehe;
+    public int getHeight() {
+        return height;
     }
 
     public int getPaddleX() {

@@ -3,40 +3,42 @@ package Breakout2;
 import processing.core.PApplet;
 
 public class Brick {
-//Attribute
-    private int brickX;
-    private int brickY;
-    private int brickBreite;
-    private int brickHoehe;
-    private int getroffen;
-    private int color;
-    private PApplet meinApplet;
+    private final static short DEFAULT_GAME = 0;
+    private final static short HIT_TWICE = 1;
+    //Attribute
+    private final int brickX;
+    private final int brickY;
+    private final int brickWidth;
+    private final int brickHeight;
+    private final int colour;
     private short gameModeNum;
-private final static short DEFAULT_GAME = 0;
-private final static short HIT_TWICE = 1;
-//Konstruktor
-    public Brick(PApplet ma, int xB, int yB, int breite, int hoehe){
+    private final PApplet meinApplet;
+    private int hit;
+
+    //Konstruktor
+    public Brick(PApplet ma, int xB, int yB, int breite, int hoehe) {
         brickX = xB;
         brickY = yB;
-        brickBreite = breite;
-        brickHoehe = hoehe;
-        getroffen = 0;
-        color = 0xFF00FFFF;
+        brickWidth = breite;
+        brickHeight = hoehe;
+        hit = 0;
+        colour = 0xFF00FFFF;
         meinApplet = ma;
     }
-    public Brick(PApplet ma, int xB, int yB, int breite, int hoehe, short gameMode){
+
+    public Brick(PApplet ma, int xB, int yB, int breite, int hoehe, short gameMode) {
         brickX = xB;
         brickY = yB;
-        brickBreite = breite;
-        brickHoehe = hoehe;
-        getroffen = 0;
-        color = 0xFF00FFFF;
+        brickWidth = breite;
+        brickHeight = hoehe;
+        hit = 0;
+        colour = 0xFF00FFFF;
         meinApplet = ma;
         String name = "NONE";
-        switch(gameMode){
+        switch (gameMode) {
             case DEFAULT_GAME:
                 name = "DEFAULT_GAME";
-gameModeNum = gameMode;
+                gameModeNum = gameMode;
             case HIT_TWICE:
                 name = "HIT_TWICE";
                 gameModeNum = gameMode;
@@ -45,27 +47,29 @@ gameModeNum = gameMode;
                 break;
         }
     }
-public static void gameNotification(){
 
-}
-public short getGameModeNum(){
+    public static void gameNotification() {
+
+    }
+
+    public short getGameModeNum() {
         return gameModeNum;
-}
+    }
 //Methoden
 
-    public void setGetroffen(int getroffen) {
-        this.getroffen = getroffen;
+    public int getHit() {
+        return hit;
     }
 
-    public int getGetroffen() {
-        return getroffen;
+    public void setHit(int hit) {
+        this.hit = hit;
     }
 
-    public void zeichenBrick(){
-        if(getroffen == 0){
+    public void drawBrick() {
+        if (hit == 0) {
             meinApplet.rectMode(meinApplet.CORNER);
-            meinApplet.fill(color);
-            meinApplet.rect(brickX, brickY, brickBreite, brickHoehe);
+            meinApplet.fill(colour);
+            meinApplet.rect(brickX, brickY, brickWidth, brickHeight);
         }
 
     }
@@ -78,11 +82,11 @@ public short getGameModeNum(){
         return brickY;
     }
 
-    public int getBrickBreite() {
-        return brickBreite;
+    public int getBrickWidth() {
+        return brickWidth;
     }
 
-    public int getBrickHoehe() {
-        return brickHoehe;
+    public int getBrickHeight() {
+        return brickHeight;
     }
 }

@@ -37,18 +37,17 @@ public class Main extends PApplet {
 	}
 
 	public void draw() {
-		background(100,200,140);
-		myBall.ballZeichen();
-		myBall.ballBewegen();
-		myBall.ballReflextieren();
-		myPaddle.paddleZeichen();
-		myPaddle.paddleBewegen();
-		myBall.ballPaddleReflextieren();
+		background(100, 200, 140);
+		myBall.drawBall();
+		myBall.moveBall();
+		myBall.ballReflect();
+		myPaddle.paddleDraw();
+		myPaddle.paddleMove();
+		myBall.ballPaddleReflect();
 		for (int i = 0; i < myBrick.length; i++) {
-			myBrick[i].zeichenBrick();
-			myBall.ballBrickReflextieren(i);
+			myBrick[i].drawBrick();
+			myBall.ballBrickReflect(i);
 		}
-
 
 
 	}

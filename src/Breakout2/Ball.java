@@ -7,18 +7,18 @@ public class Ball {
     //Attribute
     private int xBall;
     private int yBall;
-    private int breite;
-    private int deltaX; //Geschwindigkeit in x-Richtung
+    private final int width;
+    private final PApplet myApplet;
     private int deltaY; //Geschwindigkeit in Y-Richtung
-    private PApplet myApplet;
-    private Paddle myPaddle;
-    private Brick[] myBrick;
-    private int rBall;
+    private final Paddle myPaddle;
+    private final Brick[] myBrick;
+    private final int rBall;
+    private int deltaX; //velocity in X
 
 //Konstruktor
 
     public Ball(PApplet mA, Paddle p, Brick[] br, int x, int y, int b) {
-        breite = b;
+        width = b;
         xBall = x;
         yBall = y;
         deltaX = 2;
@@ -26,79 +26,78 @@ public class Ball {
         myApplet = mA;
         myPaddle = p;
         myBrick = br;
-        rBall = breite / 2;
+        rBall = width / 2;
     }
 
     //Methoden
-    public void ballZeichen() {
+    public void drawBall() {
         myApplet.fill(255, 0, 0);
-        myApplet.circle(xBall, yBall, breite);
+        myApplet.circle(xBall, yBall, width);
     }
 
-    public void ballBewegen() {
+    public void moveBall() {
         xBall = xBall + deltaX;
         yBall = yBall + deltaY;
     }
 
-    public void ballReflextieren() {
-        if ((xBall + breite / 2 > myApplet.width) || (xBall - breite / 2 < 0)) {
+    public void ballReflect() {
+        if ((xBall + width / 2 > myApplet.width) || (xBall - width / 2 < 0)) {
             deltaX = -deltaX;
         }
-        if ((yBall + breite / 2 > myApplet.height) || (yBall - breite / 2 < 0)) {
+        if ((yBall + width / 2 > myApplet.height) || (yBall - width / 2 < 0)) {
             deltaY = -deltaY;
         }
     }
 
-    public void ballPaddleReflextieren() {
-        if ((xBall + rBall > myPaddle.getPaddleX() - myPaddle.getBreite()/2) &&
-                (xBall - rBall < myPaddle.getPaddleX() + myPaddle.getBreite()/2) &&
-                (yBall + rBall > myPaddle.getPaddleY() - myPaddle.getHoehe()/2))
-        {
+    public void ballPaddleReflect() {
+        if ((xBall + rBall > myPaddle.getPaddleX() - myPaddle.getWidth() / 2) &&
+                (xBall - rBall < myPaddle.getPaddleX() + myPaddle.getWidth() / 2) &&
+                (yBall + rBall > myPaddle.getPaddleY() - myPaddle.getHeight() / 2)) {
             deltaY = -deltaY;
         }
     }
 
-    public void ballBrickReflextieren(int i) {
+    public void ballBrickReflect(int i) {
         int testX = xBall;
         int testY = yBall;
         int distX;
         int distY;
-        double distanz;
-        boolean linksRechts = false;
-        boolean obenUnten = false;
+        double distance;
+        boolean leftRight = false;
+        boolean upDown = false;
 
-        if (myBrick[i].getGetroffen() == 0) {
+        if (myBrick[i].getHit() == 0) {
             if (xBall < myBrick[i].getBrickX()) {
                 testX = myBrick[i].getBrickX();
-                linksRechts = true;
+                leftRight = true;
             } else {
-                if (xBall > myBrick[i].getBrickX() + myBrick[i].getBrickBreite()) {
-                    testX = myBrick[i].getBrickX() + myBrick[i].getBrickBreite();
-                    linksRechts = true;
+                if (xBall > myBrick[i].getBrickX() + myBrick[i].getBrickWidth()) {
+                    testX = myBrick[i].getBrickX() + myBrick[i].getBrickWidth();
+                    leftRight = true;
                 }
             }
 
             if (yBall < myBrick[i].getBrickY()) {
                 testY = myBrick[i].getBrickY();
-                obenUnten = true;
+                upDown = true;
             } else {
-                if (yBall > myBrick[i].getBrickY() + myBrick[i].getBrickHoehe()) {
-                    testY = myBrick[i].getBrickY() + myBrick[i].getBrickHoehe();
-                    obenUnten = true;
+                if (yBall > myBrick[i].getBrickY() + myBrick[i].getBrickHeight()) {
+                    testY = myBrick[i].getBrickY() + myBrick[i].getBrickHeight();
+                    upDown = true;
                 }
             }
             distX = xBall - testX;
             distY = yBall - testY;
-            distanz = sqrt((distX * distX) + (distY * distY));
+            distance = sqrt((distX * distX) + (distY * distY));
 
-            if (distanz < breite / 2) {
-                if (obenUnten) {
+            if (distance < width / 2) {
+                if (upDown) {
                     deltaY = -deltaY;
-                    myBrick[i].setGetroffen(1);
+                    myBrick[i].setHit(1);
                 }
-                if (linksRechts) {
+                if (leftRight) {
                     deltaX = -deltaX;
-                    myBrick[i].setGetroffen(1);
+                    myBrick[i].setHit(1);
                 }
             }
         }
