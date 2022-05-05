@@ -14,6 +14,7 @@ public class Brick {
     private short gameModeNum;
     private final PApplet meinApplet;
     private int hit;
+    private Score myScore;
 
     //Konstruktor
     public Brick(PApplet ma, int xB, int yB, int breite, int hoehe) {
@@ -28,6 +29,29 @@ public class Brick {
 
     public Brick(PApplet ma, int xB, int yB, int breite, int hoehe, short gameMode) {
         brickX = xB;
+        brickY = yB;
+        brickWidth = breite;
+        brickHeight = hoehe;
+        hit = 0;
+        colour = 0xFF00FFFF;
+        meinApplet = ma;
+        String name = "NONE";
+        switch (gameMode) {
+            case DEFAULT_GAME:
+                name = "DEFAULT_GAME";
+                gameModeNum = gameMode;
+            case HIT_TWICE:
+                name = "HIT_TWICE";
+                gameModeNum = gameMode;
+            default:
+                System.out.println(name + " is chosen");
+                break;
+        }
+    }
+
+    public Brick(PApplet ma, int xB, int yB, int breite, int hoehe, short gameMode, Score myScore) {
+        brickX = xB;
+        this.myScore = myScore;
         brickY = yB;
         brickWidth = breite;
         brickHeight = hoehe;
@@ -70,6 +94,10 @@ public class Brick {
             meinApplet.rectMode(meinApplet.CORNER);
             meinApplet.fill(colour);
             meinApplet.rect(brickX, brickY, brickWidth, brickHeight);
+        } else if (hit == 1) {
+            hit++;
+            myScore.incrementScoringBoard();
+
         }
 
     }

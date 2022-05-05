@@ -5,7 +5,7 @@ public class Main extends PApplet {
 	Ball myBall;
 	Paddle myPaddle;
 	Brick[] myBrick = new Brick[20];
-
+	Score myScore = new Score();
 	public static void main(String[] args) {
 		PApplet.main("Breakout2.Main");
 	}
@@ -20,7 +20,7 @@ public class Main extends PApplet {
 		int y = 50;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 5; j++) {
-				myBrick[a] = new Brick(this, x ,y, 100,20, (short) 1);
+				myBrick[a] = new Brick(this, x, y, 100, 20, (short) 1, myScore);
 				a++;
 				x += 120;
 			}
@@ -44,8 +44,10 @@ public class Main extends PApplet {
 		myPaddle.paddleDraw();
 		myPaddle.paddleMove();
 		myBall.ballPaddleReflect();
+
 		for (int i = 0; i < myBrick.length; i++) {
 			myBrick[i].drawBrick();
+
 			myBall.ballBrickReflect(i);
 		}
 
